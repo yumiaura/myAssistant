@@ -1,0 +1,7 @@
+.env
+history.txt
+index.faiss
+documents.pkl
+__pycache__/
+*.pyc
+
