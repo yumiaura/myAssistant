@@ -767,3 +767,7 @@ def demonstrate_complete_workflow():
 
 if __name__ == "__main__":
     demonstrate_complete_workflow()
+                        nn.ReLU(),
+            nn.Linear(dim // 2, 1),
+            nn.Sigmoid()
+        )
