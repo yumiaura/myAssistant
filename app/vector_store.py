@@ -12,9 +12,15 @@ from sentence_transformers import SentenceTransformer
 from app.config import FAISS_INDEX, DOCUMENTS_PATH, EMBEDDING_MODEL_NAME
 
 
+MODEL_CACHE = None
+
+
 def _load_model():
-    """Load the sentence transformer model."""
-    return SentenceTransformer(EMBEDDING_MODEL_NAME)
+    """Load the sentence transformer model (cached across calls)."""
+    global MODEL_CACHE
+    if MODEL_CACHE is None:
+        MODEL_CACHE = SentenceTransformer(EMBEDDING_MODEL_NAME)
+    return MODEL_CACHE
 
 
 def _read_text_files(folder_path: Path) -> List[str]:
