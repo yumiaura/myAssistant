@@ -26,7 +26,12 @@ def get_recent_history(lines: int = 10) -> List[str]:
     try:
         with open(history_path, "r", encoding="utf-8") as f:
             all_lines = f.readlines()
-            return [line.strip() for line in all_lines[-lines:] if line.strip()]
-    
     except FileNotFoundError:
         return []
+
+    meaningful = [
+        line.strip()
+        for line in all_lines
+        if line.strip() and line.strip() != "---"
+    ]
+    return meaningful[-lines:]
