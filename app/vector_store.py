@@ -9,7 +9,12 @@ import faiss
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-from app.config import FAISS_INDEX, DOCUMENTS_PATH, EMBEDDING_MODEL_NAME
+from app.config import (
+    FAISS_INDEX,
+    DOCUMENTS_PATH,
+    EMBEDDING_MODEL_NAME,
+    SIMILARITY_THRESHOLD,
+)
 
 
 MODEL_CACHE = None
@@ -86,11 +91,14 @@ def search_similar(query: str, top_k: int = 3) -> List[str]:
     
     # Search
     scores, indices = index.search(query_embedding, top_k)
-    
-    # Return similar documents
+
+    # Return similar documents above the similarity threshold
     similar_docs = []
-    for i, idx in enumerate(indices[0]):
-        if idx < len(documents):
-            similar_docs.append(documents[idx])
-    
+    for score, idx in zip(scores[0], indices[0]):
+        if idx < 0 or idx >= len(documents):
+            continue
+        if score < SIMILARITY_THRESHOLD:
+            continue
+        similar_docs.append(documents[idx])
+
     return similar_docs
