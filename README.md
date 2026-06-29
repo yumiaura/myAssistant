@@ -6,6 +6,33 @@ Required: python3.11
 pip3 install -r requirements.txt
 ```
 
+# Prerequisites
+[Ollama](https://ollama.com) must be running locally with the default model pulled:
+```
+ollama pull qwen3:8b
+```
+
+# Configuration
+Settings are read from environment variables (a `.env` file is loaded automatically).
+Copy the template and adjust as needed:
+```
+cp env_template.txt .env
+```
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `OLLAMA_URL` | `http://localhost:11434` | Ollama server URL |
+| `OLLAMA_MODEL` | `qwen3:8b` | Model used for generation |
+| `OLLAMA_TIMEOUT` | `120` | Request timeout in seconds |
+| `EMBEDDING_MODEL_NAME` | `all-MiniLM-L6-v2` | Sentence-transformer for embeddings |
+| `SIMILARITY_THRESHOLD` | `0.25` | Min cosine score to keep a retrieved document |
+| `TOP_K` | `3` | Number of documents retrieved per query |
+| `RAW_FOLDER` | `raw` | Folder with source `.txt` files |
+| `FAISS_INDEX` | `index.faiss` | Path to the saved FAISS index |
+| `DOCUMENTS_PATH` | `documents.pkl` | Path to the pickled documents |
+| `HISTORY_FILE` | `history.txt` | Conversation history file |
+| `PROMPT_TEMPLATE` | `PROMPT.j2` | Jinja2 prompt template |
+
 # Usage:
 # Example RAG
 ```
