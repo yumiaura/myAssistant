@@ -1,6 +1,7 @@
 # Ollama configuration
 OLLAMA_URL=http://localhost:11434
 OLLAMA_MODEL=qwen3:8b
+OLLAMA_TIMEOUT=120
 
 # Model configuration
 EMBEDDING_MODEL_NAME=all-MiniLM-L6-v2

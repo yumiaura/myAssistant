@@ -3,7 +3,7 @@
 import re
 
 import requests
-from app.config import OLLAMA_URL, OLLAMA_MODEL
+from app.config import OLLAMA_URL, OLLAMA_MODEL, OLLAMA_TIMEOUT
 
 # Reasoning models such as qwen3 may wrap chain-of-thought in <think>...</think>
 THINK_BLOCK_RE = re.compile(r"<think>.*?</think>", re.DOTALL)
@@ -26,7 +26,7 @@ def query_ollama(prompt: str) -> str:
     }
     
     try:
-        response = requests.post(f"{url}/api/generate", json=payload, timeout=60)
+        response = requests.post(f"{url}/api/generate", json=payload, timeout=OLLAMA_TIMEOUT)
         response.raise_for_status()
         
         result = response.json()
