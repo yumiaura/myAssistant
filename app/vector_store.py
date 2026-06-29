@@ -92,13 +92,18 @@ def search_similar(query: str, top_k: int = 3) -> List[str]:
     # Search
     scores, indices = index.search(query_embedding, top_k)
 
-    # Return similar documents above the similarity threshold
+    # Return similar documents above the similarity threshold, without duplicates
     similar_docs = []
+    seen = set()
     for score, idx in zip(scores[0], indices[0]):
         if idx < 0 or idx >= len(documents):
             continue
         if score < SIMILARITY_THRESHOLD:
             continue
-        similar_docs.append(documents[idx])
+        doc = documents[idx]
+        if doc in seen:
+            continue
+        seen.add(doc)
+        similar_docs.append(doc)
 
     return similar_docs
