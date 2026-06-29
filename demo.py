@@ -53,13 +53,12 @@ def query_command(args):
     # Render prompt template
     prompt = render_prompt(context)
     
-    # Query Ollama
+    # Query Ollama (streams the answer to stdout as it is generated)
+    print("Response: ", end="", flush=True)
     response = query_ollama(prompt)
-    
+
     # Save interaction to history
     save_interaction(query_text, response)
-    
-    print(f"Response: {response}")
 
 
 def main():

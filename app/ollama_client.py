@@ -1,5 +1,6 @@
 """Ollama client for querying language models."""
 
+import json
 import re
 
 import requests
@@ -15,22 +16,36 @@ def strip_reasoning(text: str) -> str:
 
 
 def query_ollama(prompt: str) -> str:
-    """Query Ollama with the given prompt."""
+    """Query Ollama, streaming the answer to stdout as it is generated.
+
+    Returns the full response text with reasoning blocks removed.
+    """
     url = OLLAMA_URL
     model = OLLAMA_MODEL
-    
+
     payload = {
         "model": model,
         "prompt": prompt,
-        "stream": False
+        "stream": True
     }
-    
+
+    chunks = []
     try:
-        response = requests.post(f"{url}/api/generate", json=payload, timeout=OLLAMA_TIMEOUT)
-        response.raise_for_status()
-        
-        result = response.json()
-        return strip_reasoning(result.get("response", "No response received"))
-    
+        with requests.post(
+            f"{url}/api/generate", json=payload, timeout=OLLAMA_TIMEOUT, stream=True
+        ) as response:
+            response.raise_for_status()
+            for line in response.iter_lines():
+                if not line:
+                    continue
+                token = json.loads(line).get("response", "")
+                if token:
+                    print(token, end="", flush=True)
+                    chunks.append(token)
+            print()
     except requests.exceptions.RequestException as e:
-        return f"Error querying Ollama: {e}"
+        message = f"Error querying Ollama: {e}"
+        print(message)
+        return message
+
+    return strip_reasoning("".join(chunks))
