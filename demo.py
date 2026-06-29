@@ -12,7 +12,7 @@ from app.vector_store import build_index, search_similar
 from app.ollama_client import query_ollama
 from app.history import get_recent_history, save_interaction
 from app.template import render_prompt
-from app.config import FAISS_INDEX, RAW_FOLDER
+from app.config import FAISS_INDEX, RAW_FOLDER, TOP_K
 
 
 def build_command(args):
@@ -37,7 +37,7 @@ def query_command(args):
     print(f"Searching for: {query_text}")
     
     # Search similar documents
-    similar_docs = search_similar(query_text, top_k=3)
+    similar_docs = search_similar(query_text, top_k=TOP_K)
     
     # Get recent history
     history = get_recent_history(10)

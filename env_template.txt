@@ -6,6 +6,9 @@ OLLAMA_TIMEOUT=120
 # Model configuration
 EMBEDDING_MODEL_NAME=all-MiniLM-L6-v2
 
+# Retrieval configuration
+TOP_K=3
+
 # File paths configuration
 FAISS_INDEX=index.faiss
 DOCUMENTS_PATH=documents.pkl

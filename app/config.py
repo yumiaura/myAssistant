@@ -21,3 +21,6 @@ EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL_NAME", "all-MiniLM-L6-v2")
 
 # Minimum cosine similarity for a retrieved document to be kept (0.0 disables filtering)
 SIMILARITY_THRESHOLD = float(os.getenv("SIMILARITY_THRESHOLD", "0.25"))
+
+# Number of similar documents to retrieve per query
+TOP_K = int(os.getenv("TOP_K", "3"))
