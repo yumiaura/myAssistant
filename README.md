@@ -1,5 +1,11 @@
 # myAssistant
 
+A minimal local RAG assistant: it retrieves context from a FAISS index over your
+own `.txt` files and generates an answer with a local Ollama model. All model
+access goes through [pydantic-ai](https://ai.pydantic.dev) — the Ollama server is
+reached via its OpenAI-compatible `/v1` endpoint (`OllamaModel` + `OllamaProvider`),
+so the model/provider can be swapped without touching the rest of the app.
+
 # Installation
 Required: python3.11
 ```
