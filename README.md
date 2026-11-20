@@ -30,6 +30,7 @@ cp env_template.txt .env
 | `OLLAMA_URL` | `http://localhost:11434` | Ollama server URL |
 | `OLLAMA_MODEL` | `qwen3:8b` | Model used for generation |
 | `OLLAMA_TIMEOUT` | `120` | Request timeout in seconds |
+| `OLLAMA_API_KEY` | (empty) | Bearer token for an Ollama behind an authenticating gateway; empty for a local Ollama |
 | `EMBEDDING_MODEL_NAME` | `all-MiniLM-L6-v2` | Sentence-transformer for embeddings |
 | `SIMILARITY_THRESHOLD` | `0.25` | Min cosine score to keep a retrieved document |
 | `TOP_K` | `3` | Number of documents retrieved per query |

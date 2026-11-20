@@ -15,6 +15,9 @@ RAW_FOLDER = os.getenv("RAW_FOLDER", "raw")
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen3:8b")
 OLLAMA_TIMEOUT = int(os.getenv("OLLAMA_TIMEOUT", "120"))
+# Bearer token for an Ollama behind an authenticating gateway (the Spark
+# gateway admits callers by token only). Empty: no key, as for a local Ollama.
+OLLAMA_API_KEY = os.getenv("OLLAMA_API_KEY", "").strip()
 
 # Model configuration
 EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL_NAME", "all-MiniLM-L6-v2")
