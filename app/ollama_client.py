@@ -8,7 +8,7 @@ from pydantic_ai.models.ollama import OllamaModel
 from pydantic_ai.providers.ollama import OllamaProvider
 from pydantic_ai.settings import ModelSettings
 
-from app.config import OLLAMA_URL, OLLAMA_MODEL, OLLAMA_TIMEOUT
+from app.config import OLLAMA_API_KEY, OLLAMA_URL, OLLAMA_MODEL, OLLAMA_TIMEOUT
 
 # Reasoning models such as qwen3 may wrap chain-of-thought in <think>...</think>
 THINK_BLOCK_RE = re.compile(r"<think>.*?</think>", re.DOTALL)
@@ -27,7 +27,7 @@ def build_agent() -> Agent:
     if AGENT_CACHE is None:
         model = OllamaModel(
             OLLAMA_MODEL,
-            provider=OllamaProvider(base_url=f"{OLLAMA_URL}/v1"),
+            provider=OllamaProvider(base_url=f"{OLLAMA_URL}/v1", api_key=OLLAMA_API_KEY or None),
         )
         AGENT_CACHE = Agent(model, model_settings=ModelSettings(timeout=OLLAMA_TIMEOUT))
     return AGENT_CACHE
